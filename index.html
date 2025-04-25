@@ -1,48 +1,56 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Erick's Personal Portfolio Website</title>
-   <script src="script.js" defer></script>
-    <link href="styles.css" rel="stylesheet">
-    
-  </head>
-  <body>
-      <h1>Welcome to Erick's Personal Portfolio Website</h1>
-    <ul class"tabs">
-      <li data-tab-target="#Home" class="active tab">Home</li>
-      <li data-tab-target="#About" class="tab">About</li>
-      <li data-tab-target="#Projects" class="tab">Projects</li>
-    </ul>
-    <div class="tab-content">
-      <div id="home" data-tab-content class="active">
-        <h1>Home</h1>
-        <p>This is home</p>
-      </div>
-      <div id="About" data-tab-content>
-        <h1>About</h1>
-        <p>This is about</p>
-      </div>
-      <div id="Projects" data-tab-content>
-        <h1>Projects</h1>
-        <p>This is projects</p>
-      </div>
-        <div id="Skills" data-tab-content>
-        <h1>Skills</h1>
-        <p>This is Skills</p>
-      </div>
-        <div id="Contact" data-tab-content>
-        <h1>Contact</h1>
-        <p>This is contact</p>
-        </div>
-      </div>
-  <p>
-    Greetings, my name is Erick Rayas. I am a junior here at California State University, Fullerton. I am majoring in computer science. 
-  </p>
-  This is my very first website <b>I'm happy</b>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Erick's Personal Portfolio Website</title>
+  <script src="script.js" defer></script>
+  <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+  <h1>Welcome to Erick's Personal Portfolio Website</h1>
 
-  <a href="https://imgur.com/a/Tfw0rFj"target="_blank">
-  </body>
+  <!-- Fixed: class="tabs" was missing an = -->
+  <ul class="tabs">
+    <li data-tab-target="#home" class="active tab">Home</li>
+    <li data-tab-target="#About" class="tab">About</li>
+    <li data-tab-target="#Projects" class="tab">Projects</li>
+    <li data-tab-target="#Skills" class="tab">Skills</li>
+    <li data-tab-target="#Contact" class="tab">Contact</li>
+  </ul>
+
+  <div class="tab-content">
+    <!-- Fixed: id should match data-tab-target (was "#Home" vs "home") -->
+    <div id="home" data-tab-content class="active">
+      <h1>Home</h1>
+      <p>This is home</p>
+    </div>
+    <div id="About" data-tab-content>
+      <h1>About</h1>
+      <p>This is about</p>
+    </div>
+    <div id="Projects" data-tab-content>
+      <h1>Projects</h1>
+      <p>This is projects</p>
+    </div>
+    <div id="Skills" data-tab-content>
+      <h1>Skills</h1>
+      <p>This is skills</p>
+    </div>
+    <div id="Contact" data-tab-content>
+      <h1>Contact</h1>
+      <p>This is contact</p>
+    </div>
+  </div>
+
+  <p>
+    Greetings, my name is Erick Rayas. I am a junior here at California State University, Fullerton. I am majoring in computer science.
+  </p>
+  <p>This is my very first website. <b>I'm happy!</b></p>
+
+  <p>
+    <a href="https://imgur.com/a/Tfw0rFj" target="_blank">Check out my image gallery</a>
+  </p>
+</body>
 </html>
 
