@@ -2,12 +2,14 @@
   display: none;
 }
 
-.active[data-tab-content] {
+[data-tab-content].active {
   display: block;
 }
-body{
+
+body {
   padding: 0;
   margin: 0;
+  font-family: sans-serif;
 }
 
 .tabs {
@@ -17,21 +19,24 @@ body{
   margin: 0;
   padding: 0;
   border-bottom: 1px solid black;
+  background-color: #f2f2f2;
 }
 
 .tab {
   cursor: pointer;
-  padding: 10px;
+  padding: 10px 20px;
+  transition: background-color 0.3s;
 }
 
 .tab.active {
-  background-color: #CCC;
+  background-color: #ccc;
 }
 
 .tab:hover {
-  background-color: *AAA;
-    }
-.tab-content {
-  margin-left: 20px;
-  margin-right: 20px;
+  background-color: #aaa; /* Fixed the invalid '*AAA' */
 }
+
+.tab-content {
+  margin: 20px;
+}
+
