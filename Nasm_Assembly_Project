@@ -1,0 +1,503 @@
+;nasm 2.13.02
+
+section .data
+    name:     db 'Erick Rayas',10    
+    nameLen:  equ $-name     
+    
+    Rectangle:     db 'Rectangle',
+    RectangleLen:  equ $-Rectangle
+    
+    Triangle:     db 'Triangle',    
+    TriangleLen:  equ $-Triangle
+    
+    Diamond:     db 'Diamond',    
+    DiamondLen:  equ $-Diamond
+    
+    space: db ' '
+    
+    star: db '*'
+    
+    newline: db 10
+    
+    skipline: db 10
+
+section .bss
+    spacecount: resb 1
+    starcount: resb 1
+    originalstarcount: resb 1
+    diamondmaxwidth: resb 1
+    originalSpaceCount: resb 1
+    diamondwidth: resb 1
+    printtriangle1: resb 1
+    printtriangle2: resb 1
+    input: resb 1
+    spacecount1: resb 1
+    starcount1: resb 1
+    diamondmaxwidth1: resb 1   
+    originalspacecount1: resb 1
+    spacecounter1: resb 1    
+    originalStarCount1: resb 1    
+    variable: resb 1
+    height: resb 1
+    width: resb 1
+    heightcheck: resb 1
+    widthcheck: resb 1
+
+section .text
+	global _start
+
+_start:
+
+;print my name 
+    mov eax,4        
+	mov ebx,1           
+	mov ecx,name
+	mov edx,nameLen
+	int 80h 
+
+;loop1 and function for user input 
+loop1:
+ 
+;read user input for R being Rectangle, T being triangle and D being Diamond 
+    mov eax,3          
+	mov ebx,0           
+	mov ecx,input
+	mov edx,1
+	int 80h 
+
+;compare input and execute user input with .
+    cmp [input],byte '.'
+    je end
+
+;compare input with byte R and jump if equal to function PrintRectangle
+    cmp [input],byte 'R'
+    je PrintRectangle
+
+;compare input with byte T and jump if equal to function PrintTriangle
+    cmp [input],byte 'T'
+    je PrintTriangle
+
+;compare input with byte D and jump if equal to function PrintDiamond
+    cmp [input],byte 'D'
+    je PrintDiamond
+    
+jmp loop1
+
+;label and function to print rectangle accounting user input for height and width and start for rectangle print 
+PrintRectangle:
+;print Rectangle 
+    mov eax,4
+    mov ebx,1
+    mov ecx,Rectangle
+    mov edx,RectangleLen
+    int 80h
+
+;print newline
+    mov eax,4
+    mov ebx,1
+    mov ecx,newline
+    mov edx,1
+    int 80h
+
+;read skipline
+    mov eax,3
+    mov ebx,0
+    mov ecx,skipline
+    mov edx,1
+    int 80h
+
+;read height from 2 bytes from user input
+    mov eax,3
+    mov ebx,0
+    mov ecx,height
+    mov edx,2
+    int 80h
+
+;height code clean from ascii and calculation 
+    mov al,[height]
+    sub al,'0'
+    mov cl,[height+1]
+    sub cl,'0'
+    mov bl,10
+    mul bl
+    add al,cl
+    mov [height],al    
+    
+;read skipline    
+    mov eax,3
+    mov ebx,0
+    mov ecx,skipline
+    mov edx,1
+    int 80h
+
+;read width from 2 bytes from user input
+    mov eax,3
+    mov ebx,0
+    mov ecx,width
+    mov edx,2
+    int 80h
+
+;width code clean from ascii and calculation
+    mov al,[width]
+    sub al,'0'
+    mov cl,[width+1]
+    sub cl,'0'
+    mov bl,10
+    mul bl
+    add al,cl
+    mov [width],al
+    mov [heightcheck],byte 0  
+    call rectangle1
+
+;jump to loop1 from accounting user input 
+jmp loop1
+
+;rectangle1 function for checking height and width
+rectangle1:
+    mov [widthcheck],byte 0
+    call printspacesrectangle
+    call printnewline
+    mov al,[heightcheck]
+    add al,1
+    mov [heightcheck],al
+    mov bl,[height]
+    cmp al,bl
+    jnz rectangle1   
+        
+ret
+
+;function to print spaces for rectangle
+printspacesrectangle:
+;print stars
+    mov eax,4
+    mov ebx,1
+    mov ecx,star
+    mov edx,1
+    int 80h
+    mov al,[widthcheck]
+    add al,1
+    mov [widthcheck],al
+    mov bl,[width]
+    cmp al,bl
+    jnz printspacesrectangle
+ret
+;end of calculating and printing rectangle 
+
+;PrintTriangle for printing triangle and account user input for triangle size and start for printing triangle 
+PrintTriangle:
+
+;read skipline
+ 	mov eax,3          
+	mov ebx,0           
+	mov ecx,skipline
+	mov edx,1
+	int 80h 
+
+;read variable 
+ 	mov eax,3          
+	mov ebx,0           
+	mov ecx,variable
+	mov edx,2
+	int 80h
+
+;print Triangle
+ 	mov eax,4          
+	mov ebx,1          
+	mov ecx,Triangle
+	mov edx,TriangleLen
+	int 80h
+
+;print newline
+ 	mov eax,4          
+	mov ebx,1          
+	mov ecx,newline
+	mov edx,1
+	int 80h
+
+;calculations for variable printing triangle stars
+    mov al,[variable]
+    sub al,'0'
+    mov cl,[variable+1]
+    sub cl,'0'
+    mov bl,10
+    mul bl
+    add al,cl
+    mov [printtriangle1],al
+    mov [printtriangle2],al
+    mov [starcount],byte 1
+    mov [originalstarcount],byte 1
+    mov al,[printtriangle2]
+    mov bl,2
+    div bl
+    mov [spacecount],al
+    mov [originalSpaceCount],al
+
+    call printtriangle3
+    call printstar3
+
+;print newline
+ 	mov eax,4          
+	mov ebx,1          
+	mov ecx,newline
+	mov edx,1
+	int 80h
+
+;jump to loop1    
+jmp loop1
+
+;print triangle3 function for calculations for printing triangle 
+printtriangle3:
+
+printmorespaces1:
+    call printspaces
+    call printstars
+    
+    mov al,[originalstarcount]
+    add al,2
+    mov [originalstarcount],al
+    mov [starcount],al
+    
+    call printnewline
+    mov al,[originalSpaceCount]
+    sub al,1
+    mov [originalSpaceCount],al
+    mov [spacecount],al
+    cmp al,0
+    jnz printmorespaces1    
+ret
+;end of calculating and printing triangle 
+
+;PrintDiamond label to print diamond and account user input for diamond size and start for printing diamond
+PrintDiamond:
+
+;print Diamond 
+    mov eax,4        
+	mov ebx,1           
+	mov ecx,Diamond
+	mov edx,DiamondLen
+	int 80h 
+
+;print newline 
+    mov eax,4        
+	mov ebx,1           
+	mov ecx,newline
+	mov edx,1
+	int 80h 
+
+;print skipline 
+ 	mov eax,3          
+	mov ebx,0           
+	mov ecx,skipline
+	mov edx,1
+	int 80h 
+
+;read variable 
+ 	mov eax,3          
+	mov ebx,0           
+	mov ecx,variable 
+	mov edx,2
+	int 80h 
+
+;calculations for variavle and code clean from ascii 
+    mov al,[variable]
+    sub al,'0'
+    mov cl,[variable+1]
+    sub cl,'0'
+    mov bl,10
+    mul bl
+    add al,cl
+    mov [diamondwidth],al
+    mov [diamondmaxwidth],al
+    mov [diamondmaxwidth1],al
+    mov [starcount],byte 1
+    mov [originalstarcount],byte 1
+    mov al,[diamondmaxwidth]
+    mov bl,2
+    div bl
+    mov [spacecount],al
+    mov [originalSpaceCount],al
+        
+    call printtopdiamond
+    call printstar2
+    call printnewline
+    call printlowerdiamond
+
+;jump to loop1
+jmp loop1
+
+;print the top of diamond function 
+printtopdiamond:
+
+printmorespaces2:
+    call printspaces
+    call printstars
+    
+    mov al,[originalstarcount]
+    add al,2
+    mov [originalstarcount],al
+    mov [starcount],al
+    
+    call printnewline
+    mov al,[originalSpaceCount]
+    sub al,1
+    mov [originalSpaceCount],al
+    mov [spacecount],al
+    cmp al,0
+    jnz printmorespaces2    
+ret
+
+;print newline function 
+printnewline:
+    mov eax,4
+    mov ebx,1
+    mov ecx,newline
+    mov edx,1
+    int 80h
+ret
+
+;print spaces function for triangle 
+printspaces:
+    mov eax,4
+    mov ebx,1
+    mov ecx,space
+    mov edx,1
+    int 80h
+    mov al,[spacecount]
+    sub al,1
+    mov [spacecount],al
+    cmp al,0
+    jnz printspaces
+ret
+
+;print stars function for triangle 
+printstars:
+    mov eax,4
+    mov ebx,1
+    mov ecx,star
+    mov edx,1
+    int 80h
+    mov al,[starcount]
+    sub al,1
+    mov [starcount],al
+    cmp al,0
+    jnz printstars
+ret
+
+;print lower diamond function 
+printlowerdiamond:
+
+    mov [spacecount1],byte 1
+    mov [spacecounter1],byte 1
+    mov al,[diamondmaxwidth1]
+    sub al,2
+    mov [starcount1],al
+    mov [originalStarCount1],al
+    mov al,[diamondmaxwidth1]
+    mov bl,2
+    div bl
+    mov [originalspacecount1],al
+
+;print bottom of diamond
+bottomofdiamond:
+
+    call printspaces2
+    call printstars2
+    
+    mov al,[originalStarCount1]
+    sub al,2
+    mov [originalStarCount1],al
+    mov [starcount1],al     
+    
+    call printnewline2
+    
+    mov al,[spacecounter1]
+    add al,1
+    mov [spacecounter1],al
+    mov [spacecount1],al
+    mov bl,[originalspacecount1]
+    cmp al,bl
+    jnz bottomofdiamond
+
+    call printspaces2
+    call printstars2
+;jump to loop1    
+jmp loop1
+
+;print spaces2 function for diamond
+printspaces2:
+
+;print space 
+    mov eax,4
+    mov ebx,1
+    mov ecx,space
+    mov edx,1
+    int 80h
+    mov al,[spacecount1]
+    sub al,1
+    mov [spacecount1],al
+    cmp al,0
+    jnz printspaces2
+ret
+
+;print stars2 function for diamond
+printstars2: 
+    mov eax,4
+    mov ebx,1
+    mov ecx,star
+    mov edx,1
+    int 80h
+    mov al,[starcount1]
+    sub al,1
+    mov [starcount1],al
+    cmp al,0
+    jnz printstars2
+ret
+
+;print secound newline function 
+printnewline2:
+    mov eax,4
+    mov ebx,1
+    mov ecx,newline
+    mov edx,1
+    int 80h
+ret
+
+;print star 2 function for diamond 
+printstar2:
+    mov eax,4
+    mov ebx,1
+    mov ecx,star
+    mov edx,1
+    int 80h
+    mov al,[diamondwidth]
+    sub al,1
+    mov [diamondwidth],al
+    cmp al,0
+    jnz printstar2
+ret
+;end for printing diamond 
+
+;print star 3 function for triangle  
+printstar3:
+    mov eax,4
+    mov ebx,1
+    mov ecx,star
+    mov edx,1
+    int 80h
+    mov al,[printtriangle2]
+    sub al,1
+    mov [printtriangle2],al
+    cmp al,0
+    jnz printstar3
+ret
+
+;end label and end program 
+end:
+	mov eax,1            
+	mov ebx,0           
+	int 80h
+;input example: 
+;R:07 07
+;T:07 07
+;D:07 07
+;.
