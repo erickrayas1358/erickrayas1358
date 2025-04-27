@@ -26,7 +26,7 @@ body {
 .tab {
   cursor: pointer;
   padding: 10px 20px;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s, transform 0.3s ease-in-out; /* Smooth transition on hover */
 }
 
 .tab.active {
@@ -34,10 +34,12 @@ body {
 }
 
 .tab:hover {
-  background-color: #aaa;
+  background-color: #aaa;  /* Color change on hover */
+  transform: scale(1.1);    /* Slightly enlarge the tab on hover */
 }
 
 .tab-content {
   margin: 20px;
 }
+
 
