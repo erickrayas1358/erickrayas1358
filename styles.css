@@ -10,6 +10,7 @@ body {
   padding: 0;
   margin: 0;
   font-family: sans-serif;
+  background-color: #d0e8f2; /* Light blue background */
 }
 
 .tabs {
@@ -33,7 +34,7 @@ body {
 }
 
 .tab:hover {
-  background-color: #aaa; /* Fixed the invalid '*AAA' */
+  background-color: #aaa;
 }
 
 .tab-content {
