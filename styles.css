@@ -10,7 +10,7 @@ body {
   padding: 0;
   margin: 0;
   font-family: sans-serif;
-  background-color: #d0e8f2; /* Light blue background */
+  background-color: #d0e8f2; 
 }
 
 .tabs {
@@ -26,7 +26,7 @@ body {
 .tab {
   cursor: pointer;
   padding: 10px 20px;
-  transition: background-color 0.3s, transform 0.3s ease-in-out; /* Smooth transition on hover */
+  transition: background-color 0.3s, transform 0.3s ease-in-out; 
 }
 
 .tab.active {
@@ -34,8 +34,8 @@ body {
 }
 
 .tab:hover {
-  background-color: #aaa;  /* Color change on hover */
-  transform: scale(1.1);    /* Slightly enlarge the tab on hover */
+  background-color: #aaa;  
+  transform: scale(1.1);  
 }
 
 .tab-content {
