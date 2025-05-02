@@ -1,8 +1,10 @@
-[data-tab-content] {
+[data-tab-content] 
+{
   display: none;
 }
 
-[data-tab-content].active {
+[data-tab-content].active 
+{
   display: block;
 }
 
@@ -13,7 +15,8 @@ body {
   background-color: #d0e8f2; 
 }
 
-.tabs {
+.tabs 
+{
   display: flex;
   justify-content: space-around;
   list-style-type: none;
@@ -23,22 +26,26 @@ body {
   background-color: #f2f2f2;
 }
 
-.tab {
+.tab 
+{
   cursor: pointer;
   padding: 10px 20px;
   transition: background-color 0.3s, transform 0.3s ease-in-out; 
 }
 
-.tab.active {
+.tab.active 
+{
   background-color: #ccc;
 }
 
-.tab:hover {
+.tab:hover 
+{
   background-color: #aaa;  
   transform: scale(1.1);  
 }
 
-.tab-content {
+.tab-content 
+{
   margin: 20px;
 }
 
